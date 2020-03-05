@@ -241,7 +241,7 @@ macro_rules! impl_push_bits {
     ( $($type:ty),+ ) => {
         $(
             impl PushBits for $type {
-                #[inline(always)]
+                #[inline]
                 fn push_bits(&mut self, amount: u32, bits: u8) {
                     let orig_bits = self.count_ones();
                     debug_assert!(0 < amount && amount <= 8);
@@ -260,7 +260,7 @@ macro_rules! impl_pop_bits {
     ( $($type:ty),+ ) => {
         $(
             impl PopBits for $type {
-                #[inline(always)]
+                #[inline]
                 fn pop_bits(&mut self, amount: u32) -> u8 {
                     let orig_bits = self.count_ones();
                     debug_assert!(0 < amount && amount <= 8);
@@ -374,14 +374,14 @@ macro_rules! impl_wrapper_from_naive {
     ( $($type:ty),* ) => {
         $(
             impl IntoBits<$type> for $type {
-                #[inline(always)]
+                #[inline]
                 fn into_bits(self) -> Bits<$type> {
                     Bits(self)
                 }
             }
 
             impl FromBits<$type> for $type {
-                #[inline(always)]
+                #[inline]
                 fn from_bits(bits: Bits<$type>) -> Self {
                     bits.into_raw()
                 }

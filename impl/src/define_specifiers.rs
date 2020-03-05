@@ -21,16 +21,19 @@ pub fn generate(_input: TokenStream2) -> TokenStream2 {
             #[doc = #doc_comment]
             pub enum #ident {}
 
+            #[automatically_derived]
             impl crate::Specifier for #ident {
                 const BITS: usize = #n;
                 type Base = #t_origin;
                 type Face = #t_origin;
             }
 
+            #[automatically_derived]
             impl crate::SpecifierBase for [(); #n] {
                 type Base = #t_origin;
             }
 
+            #[automatically_derived]
             impl crate::checks::private::Sealed for [(); #n] {}
         })
     }

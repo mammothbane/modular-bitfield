@@ -81,13 +81,16 @@ impl BitfieldStruct {
             #[repr(transparent)]
             pub struct #ident
             {
+                #[automatically_derived]
                 data: [u8; (#size) / 8],
             }
 
+            #[automatically_derived]
             impl modular_bitfield::checks::CheckTotalSizeMultipleOf8 for #ident {
                 type Size = modular_bitfield::checks::TotalSize<[(); (#size) % 8]>;
             }
 
+            #[automatically_derived]
             impl #ident
             {
                 pub fn new() -> Self {
@@ -108,6 +111,7 @@ impl BitfieldStruct {
     fn expand_byte_conversion_impls(&self) -> TokenStream2 {
         let ident = &self.ast.ident;
         quote! {
+            #[automatically_derived]
             impl #ident {
                 /// Returns the underlying bits.
                 ///
@@ -121,6 +125,7 @@ impl BitfieldStruct {
                 }
             }
 
+            #[automatically_derived]
             impl<'a> core::convert::TryFrom<&'a [u8]> for #ident {
                 type Error = modular_bitfield::Error;
 
@@ -153,7 +158,8 @@ impl BitfieldStruct {
 
     fn expand_internal_methods(&self) -> TokenStream2 {
         quote! {
-            #[inline(always)]
+            #[automatically_derived]
+            #[inline]
             fn get<T>(&self, start: usize) -> <T as modular_bitfield::Specifier>::Base
             where
                 T: modular_bitfield::Specifier,
@@ -195,7 +201,8 @@ impl BitfieldStruct {
                 buffer
             }
 
-            #[inline(always)]
+            #[automatically_derived]
+            #[inline]
             fn set<T>(&mut self, start: usize, new_val: <T as modular_bitfield::Specifier>::Base)
             where
                 T: modular_bitfield::Specifier,
@@ -300,6 +307,7 @@ impl BitfieldStruct {
             );
 
             expanded.extend(quote!{
+                #[automatically_derived]
                 #[doc = #getter_docs]
                 #[inline]
                 pub fn #getter_name(&self) -> <#field_type as modular_bitfield::Specifier>::Face {
@@ -310,12 +318,14 @@ impl BitfieldStruct {
                     )
                 }
 
+                #[automatically_derived]
                 #[doc = #setter_docs]
                 #[inline]
                 pub fn #setter_name(&mut self, new_val: <#field_type as modular_bitfield::Specifier>::Face) {
                     self.#checked_setter_name(new_val).expect(#set_assert_msg)
                 }
 
+                #[automatically_derived]
                 #[doc = #checked_setter_docs]
                 #[inline]
                 pub fn #checked_setter_name(

@@ -91,14 +91,16 @@ pub fn generate3(input: syn::ItemEnum) -> syn::Result<TokenStream2> {
     Ok(quote!{
         #check_discriminants_tokens
 
+        #[automatically_derived]
         impl modular_bitfield::Specifier for #enum_ident {
             const BITS: usize = #bits;
             type Base = <[(); #bits] as modular_bitfield::SpecifierBase>::Base;
             type Face = Self;
         }
 
+        #[automatically_derived]
         impl modular_bitfield::FromBits<<#enum_ident as modular_bitfield::Specifier>::Base> for #enum_ident {
-            #[inline(always)]
+            #[inline]
             fn from_bits(bits: modular_bitfield::Bits<<#enum_ident as modular_bitfield::Specifier>::Base>) -> Self {
                 match bits.into_raw() {
                     #from_bits_match_arms
@@ -110,8 +112,9 @@ pub fn generate3(input: syn::ItemEnum) -> syn::Result<TokenStream2> {
             }
         }
 
+        #[automatically_derived]
         impl modular_bitfield::IntoBits<<#enum_ident as modular_bitfield::Specifier>::Base> for #enum_ident {
-            #[inline(always)]
+            #[inline]
             fn into_bits(self) -> modular_bitfield::Bits<<#enum_ident as modular_bitfield::Specifier>::Base> {
                 modular_bitfield::Bits(
                     self as <#enum_ident as modular_bitfield::Specifier>::Base
