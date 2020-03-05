@@ -134,7 +134,7 @@ impl BitfieldStruct {
                 ///
                 /// # Layout
                 ///
-                /// Expects the given buffer to be layed out as described
+                /// Expects the given buffer to be laid out as described
                 /// [here](https://docs.rs/modular-bitfield/#generated-structure).
                 ///
                 /// # Errors
@@ -294,14 +294,14 @@ impl BitfieldStruct {
             let getter_docs = format!("Returns the value of {}.", field_name);
             let setter_docs = format!(
                 "Sets the value of {} to the given value.\n\n\
-                 #Panics\n\n\
+                 # Panics\n\n\
                  If the given value is out of bounds for {}",
                  field_name,
                  field_name,
             );
             let checked_setter_docs = format!(
                 "Sets the value of {} to the given value.\n\n\
-                 #Errors\n\n\
+                 # Errors\n\n\
                  If the given value is out of bounds for {}",
                  field_name,
                  field_name,
