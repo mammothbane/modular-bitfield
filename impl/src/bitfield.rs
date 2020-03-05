@@ -93,6 +93,7 @@ impl BitfieldStruct {
             #[automatically_derived]
             impl #ident
             {
+                /// Constructs a new zeroed instance.
                 pub fn new() -> Self {
                     Self {
                         data: [0; (#size) / 8],
@@ -117,7 +118,7 @@ impl BitfieldStruct {
                 ///
                 /// # Layout
                 ///
-                /// The returned byte slice is layed out in the same way as described
+                /// The returned byte slice is laid out in the same way as described
                 /// [here](https://docs.rs/modular-bitfield/#generated-structure).
                 #[inline]
                 pub fn to_bytes(&self) -> &[u8] {
