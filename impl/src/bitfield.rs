@@ -118,7 +118,7 @@ impl BitfieldStruct {
                 ///
                 /// # Layout
                 ///
-                /// The returned byte slice is laid out in the same way as described
+                /// The returned byte slice is laid out as described
                 /// [here](https://docs.rs/modular-bitfield/#generated-structure).
                 #[inline]
                 pub fn to_bytes(&self) -> &[u8] {
@@ -134,7 +134,7 @@ impl BitfieldStruct {
                 ///
                 /// # Layout
                 ///
-                /// Expects the given buffer to be laid out as described
+                /// Expects the buffer argument to be laid out as described
                 /// [here](https://docs.rs/modular-bitfield/#generated-structure).
                 ///
                 /// # Errors
@@ -291,18 +291,18 @@ impl BitfieldStruct {
                 &format!("value out of bounds for field {}.{}", self.ast.ident, field_name)
             );
 
-            let getter_docs = format!("Returns the value of {}.", field_name);
+            let getter_docs = format!("Returns the value of `{}`.", field_name);
             let setter_docs = format!(
-                "Sets the value of {} to the given value.\n\n\
+                "Sets `{}` to the given value.\n\n\
                  # Panics\n\n\
-                 If the given value is out of bounds for {}",
+                 If the given value is out of bounds for `{}`.",
                  field_name,
                  field_name,
             );
             let checked_setter_docs = format!(
-                "Sets the value of {} to the given value.\n\n\
+                "Sets `{}` to the given value.\n\n\
                  # Errors\n\n\
-                 If the given value is out of bounds for {}",
+                 If the given value is out of bounds for `{}`.",
                  field_name,
                  field_name,
             );
